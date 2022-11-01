@@ -1,0 +1,152 @@
+{% extends "main/base_generic.html" %}
+
+{% block title %}
+    <title>Shop Wishlist – Alan - Kitchen Accessories Bootstrap 5 HTML Template</title>
+{% endblock %}
+
+{% load static %}
+
+{% block google_fonts%}
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,400i,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,600,700" rel="stylesheet">
+{% endblock %}
+
+{% block wrapper%}wrapper blog-page-wrapper{% endblock %}
+
+{% block main_content%}
+  <main class="main-content site-wrapper-reveal">
+    <!--== Start Page Title Area ==-->
+    <section class="page-title-area" data-bg-img="{% static 'main/images/photos/bg-page-title.webp'%}">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="page-title-content text-center">
+              <h2 class="title text-white">Wishlist</h2>
+              <div class="bread-crumbs"><a href="{% url 'index' %}">Home<span class="breadcrumb-sep">/</span></a><span class="active">Wishlist</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Page Title Area ==-->
+
+    <!--== Start Product Area Wrapper ==-->
+    <section class="product-area wishlist-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <!-- Start Product Item -->
+            <div class="wishlist-item">
+              <div class="wishlist-thumb">
+                <a href="shop-single-product.html">
+                  <img src="{% static 'main/images/shop/3.png'%}" alt="Alan-Shop">
+                </a>
+                <div class="wishlist-action">
+                  <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                    <i class="ion-android-favorite-outline"></i>
+                  </a>
+                  <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                    <i class="ion-ios-search-strong"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="wishlist-info">
+                <h4 class="title"><a href="shop-single-product.html">11. Product with video</a></h4>
+                <a class="btn-wishlist" href="shop-cart.html"><i class="fa fa-plus"></i> Add to cart</a>
+                <div class="prices">
+                  <span class="price">$50.09</span>
+                </div>
+              </div>
+            </div>
+            <!-- End Product Item -->
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <!-- Start Product Item -->
+            <div class="wishlist-item">
+              <div class="wishlist-thumb">
+                <a href="shop-single-product.html">
+                  <img src="{% static 'main/images/shop/2.webp'%}" alt="Alan-Shop">
+                </a>
+                <div class="wishlist-action">
+                  <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                    <i class="ion-android-favorite-outline"></i>
+                  </a>
+                  <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                    <i class="ion-ios-search-strong"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="wishlist-info">
+                <h4 class="title"><a href="shop-single-product.html">2. New badge product</a></h4>
+                <a class="btn-wishlist" href="shop-cart.html"><i class="fa fa-plus"></i> Add to cart</a>
+                <div class="prices">
+                  <span class="price">$102.74</span>
+                </div>
+              </div>
+            </div>
+            <!-- End Product Item -->
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <!-- Start Product Item -->
+            <div class="wishlist-item">
+              <div class="wishlist-thumb">
+                <a href="shop-single-product.html">
+                  <img src="{% static 'main/images/shop/17.png'%}" alt="Alan-Shop">
+                </a>
+                <div class="wishlist-action">
+                  <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                    <i class="ion-android-favorite-outline"></i>
+                  </a>
+                  <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                    <i class="ion-ios-search-strong"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="wishlist-info">
+                <h4 class="title"><a href="shop-single-product.html">Dummy product name</a></h4>
+                <a class="btn-wishlist" href="shop-cart.html"><i class="fa fa-plus"></i> Add to cart</a>
+                <div class="prices">
+                  <span class="price">$101.46</span>
+                </div>
+              </div>
+            </div>
+            <!-- End Product Item -->
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <!-- Start Product Item -->
+            <div class="wishlist-item">
+              <div class="wishlist-thumb">
+                <a href="shop-single-product.html">
+                  <img src="{% static 'main/images/shop/6.png'%}" alt="Alan-Shop">
+                </a>
+                <div class="wishlist-action">
+                  <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                    <i class="ion-android-favorite-outline"></i>
+                  </a>
+                  <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                    <i class="ion-ios-search-strong"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="wishlist-info">
+                <h4 class="title"><a href="shop-single-product.html">Product dummy title</a></h4>
+                <a class="btn-wishlist" href="shop-cart.html"><i class="fa fa-plus"></i> Add to cart</a>
+                <div class="prices">
+                  <span class="price">$101.46</span>
+                </div>
+              </div>
+            </div>
+            <!-- End Product Item -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Product Area Wrapper ==-->
+  </main>
+{% endblock %}
+
+{% block javascript %}
+<!--=== jQuery Zoom Min Js ===-->
+<script src="{% static 'main/js/jquery-zoom.min.js'%}"></script>
+{% endblock %}
