@@ -4571,9 +4571,11 @@ table p {
 .product-item .product-thumb {
   margin-bottom: 20px;
   position: relative;
+  min-height: 269px
 }
 .product-item .product-thumb img {
   width: 100%;
+  height: 100%
 }
 .product-item .product-thumb .ribbon {
   background-color: #000;
