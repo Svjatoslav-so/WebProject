@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from django.utils.safestring import mark_safe
 
-from .models import ProductPhoto, Product, Material, Manufacturer, Category
+from .models import ProductPhoto, Product, Material, Manufacturer, Category, Review
 
 admin.site.site_title = 'Yacht RC'
 admin.site.site_header = 'Админ-панель Yacht RC'
@@ -18,7 +18,6 @@ class ProductAdmin(admin.ModelAdmin):
               ('title', 'price'),
               'discount',
               'status',
-              ('average_rating', 'num_of_reviews'),
               'get_html_photos',
               ('warranty_period', 'return_period'),
               'amount',
@@ -39,10 +38,12 @@ class ProductAdmin(admin.ModelAdmin):
               'complete_set',
               'packing_size',
               'feature',
-              'date_of_creation')
+              'date_of_creation',
+              'reviews',
+              )
 
     prepopulated_fields = {'slug': ('title', 'product_code')}
-    readonly_fields = ('id', 'get_html_photos', 'date_of_creation', 'average_rating', 'num_of_reviews')
+    readonly_fields = ('id', 'get_html_photos', 'date_of_creation', 'reviews')
 
     def get_html_photos(self, obj):
         photos_html = ''
@@ -54,6 +55,13 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Product, ProductAdmin)
+
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('user', 'product', 'comment', 'rating', 'date_of_creation')
+
+
+admin.site.register(Review, ReviewAdmin)
 
 
 class MaterialAdmin(admin.ModelAdmin):

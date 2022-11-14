@@ -11,7 +11,7 @@
     {% load static %}
 
     <!--== Favicon ==-->
-    <link rel="shortcut icon" href="{% static 'main/images/favicon.ico'%}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'main/images/favicon.ico' %}" type="image/x-icon" />
 
     <!--== Google Fonts ==-->
     {% block google_fonts%} <!-- google fonts --> {% endblock %}
@@ -73,8 +73,8 @@
           <div class="header-align">
             <div class="header-navigation-area">
               <ul class="main-menu nav justify-content-center">
-                <li class="active"><a href="{% url 'index' %}">Home</a></li>
-                <li class="has-submenu full-width"><a href="{% url 'shop' %}">Shop</a>
+                <li class="active"><a href="{% url 'index' %}">Главная</a></li>
+                <li class="has-submenu full-width"><a href="{% url 'shop' %}">Магазин</a>
                   <ul class="submenu-nav submenu-nav-mega">
                     <li class="mega-menu-item"><a class="srmenu-title" href="#">Cutting Board</a>
                       <ul>
@@ -392,6 +392,8 @@
 
 <!--=== Custom Js ===-->
 <script src="{% static 'main/js/custom.js'%}"></script>
+
+{% block js_last %} <!--Javascript--> {% endblock %}
 
 </body>
 

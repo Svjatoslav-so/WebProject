@@ -1,0 +1,382 @@
+{% extends "main/base_generic.html" %}
+
+{% load static%}
+{% load main_tags %}
+{% load main_filters %}
+
+{% block title %}
+    <title>{{ product.title }}</title>
+{% endblock %}
+
+{% block google_fonts %}
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,400i,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,600,700" rel="stylesheet">
+{% endblock %}
+
+{% block wrapper %}home-default-wrapper{% endblock %}
+
+{% block main_content %}
+  <main class="main-content site-wrapper-reveal">
+    <!--== Start Page Title Area ==-->
+    <section class="page-title-area" data-bg-img="{% static 'main/images/photos/bg-page-title.jpg' %}" >
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="page-title-content text-center">
+              <h2 class="title text-white">{{ product.title }}</h2>
+              <div class="bread-crumbs"><a href="{% url 'index' %}">Главная<span class="breadcrumb-sep">/</span></a><span class="active">{{ product.title }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Page Title Area ==-->
+
+    <!--== Start Shop Area ==-->
+    <section class="shop-area shop-single-product">
+      <div class="container pb-md-50 pb-95 pt-50">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="single-product-slider">
+              <div class="single-product-thumb">
+                <div class="swiper-container single-product-thumb-slider">
+                  <div class="swiper-wrapper">
+                    {% for p in product.productphoto_set.all %}
+                    <div class="swiper-slide zoom zoom-hover">
+                      <div class="thumb-item">
+                        <a class="lightbox-image" data-fancybox="gallery" href="{{ p.photo.url }}">
+                          <img src="{{ p.photo.url }}" alt="Image-HasTech">
+                        </a>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                {% if product.status == "A" %}
+                <div class="ribbons">
+                  <span class="ribbon-soldout">Продано</span>
+                </div>
+                {% endif %}
+                {% if product.discount %}
+                <div class="ribbons">
+                  <span class="ribbon">Скидка</span>
+                  <span class="ribbon">-{{ product.discount|floatformat }}%</span>
+                </div>
+                {% endif %}
+              </div>
+              <div class="single-product-nav">
+                <div class="swiper-container single-product-nav-slider">
+                  <div class="swiper-wrapper">
+                    {% for p in product.productphoto_set.all %}
+                    <div class="swiper-slide">
+                      <div class="nav-item">
+                        <img src="{{ p.photo.url }}" alt="Image-HasTech">
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-next"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="single-product-info mt-md-30 mt-20">
+              <h4 class="title">{{ product.title }}</h4>
+              <div class="product-ratting">
+                <div class="ratting-icons">
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                </div>
+                <div class="ratting-caption">{% if product.review_count > 0 %}{{ product.review_count }}{% else %}Нет отзывов{% endif %}</div>
+              </div>
+              <div class="prices">
+                {% if product.discount %}
+                <span class="price">${{ product.price|discount:product.discount }}</span>
+                <del class="price-old">${{ product.price }}</del>
+                {% else %}
+                <span class="price">${{ product.price }}</span>
+                {% endif %}
+              </div>
+              <div class="product-number">
+                SKU: <span>{{ product.product_code }}</span>
+              </div>
+              <p class="product-desc">On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will</p>
+              <div class="quick-product-action">
+                <div class="action-top">
+                  <div class="pro-qty">
+                      <input type="text" id="quantity" title="Quantity" value="1" />
+                  </div>
+                  <button class="btn btn-black"><i class="fa fa-opencart"></i>В корзину</button>
+                  <a class="btn-wishlist" href="#"><i class="ti-heart"></i></a>
+                </div>
+                <div class="action-bottom">
+                  <a class="btn-theme" href="shop-checkout.html">Купить сейчас</a>
+                </div>
+              </div>
+              <div class="payment-support">
+                <h5>Guaranteed Safe Checkout</h5>
+                <ul class="payment-items">
+                  <li class="payment-item">
+                    <svg class="payment-icon-name" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-visa"><title id="pi-visa">Visa</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-.7.6-1.4.6-1.4 0-2.5.1-3.4-.2-.1.2-.1.2-.2.1zm-3.5.3c.1-.7.1-.7.2-1 .5-2.2 1-4.5 1.4-6.7.1-.2.1-.3.3-.3H18c-.2 1.2-.4 2.1-.7 3.2-.3 1.5-.6 3-1 4.5 0 .2-.1.2-.3.2M5 8.2c0-.1.2-.2.3-.2h3.4c.5 0 .9.3 1 .8l.9 4.4c0 .1 0 .1.1.2 0-.1.1-.1.1-.1l2.1-5.1c-.1-.1 0-.2.1-.2h2.1c0 .1 0 .1-.1.2l-3.1 7.3c-.1.2-.1.3-.2.4-.1.1-.3 0-.5 0H9.7c-.1 0-.2 0-.2-.2L7.9 9.5c-.2-.2-.5-.5-.9-.6-.6-.3-1.7-.5-1.9-.5L5 8.2z" fill="#142688"></path></svg>
+                  </li>
+                  <li>
+                    <svg class="payment-icon-name" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-master"><title id="pi-master">Mastercard</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><circle fill="#EB001B" cx="15" cy="12" r="7"></circle><circle fill="#F79E1B" cx="23" cy="12" r="7"></circle><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.3-3 3.4-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"></path></svg>
+                  </li>                
+                </ul>
+              </div>
+              <div class="widget-social-icons">
+                <a class="facebook" href="#/"><i class="ion-social-facebook"></i> Facebook</a>
+                <a class="twitter" href="#/"><i class="ion-social-twitter"></i> Twitter</a>
+                <a class="google-plus" href="#/"><i class="ion-social-googleplus-outline"></i> Google+</a>
+                <a class="pinterest" href="#/"><i class="ion-social-pinterest"></i> Pinterest</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Shop Area ==-->
+
+      <!--== Start Shop Tab Area ==-->
+    <section class="product-area product-description-review-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="product-description-review">
+              <ul class="nav nav-tabs product-description-tab-menu" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="product-desc-tab" data-bs-toggle="tab" data-bs-target="#productDesc" type="button" role="tab" aria-controls="productDesc" aria-selected="true">Description</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="product-review-tab" data-bs-toggle="tab" data-bs-target="#productReview" type="button" role="tab" aria-controls="productReview" aria-selected="false">Reviews</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="product-comment-tab" data-bs-toggle="tab" data-bs-target="#commentProduct" type="button" role="tab" aria-controls="commentProduct" aria-selected="false">Comments</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="product-custom-tab" data-bs-toggle="tab" data-bs-target="#productCustom" type="button" role="tab" aria-controls="productCustom" aria-selected="false">Shipping Policy</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="product-info-tab" data-bs-toggle="tab" data-bs-target="#productInfo" type="button" role="tab" aria-controls="productInfo" aria-selected="false">Size chart</button>
+                </li>
+              </ul>
+              <div class="tab-content product-description-tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="productDesc" role="tabpanel" aria-labelledby="product-desc-tab">
+                  <div class="product-desc">
+                    <p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains.</p>
+                    <p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="productReview" role="tabpanel" aria-labelledby="product-review-tab">
+                  <div class="product-review">
+                    <div class="review-header">
+                      <h4 class="title">Customer Reviews</h4>
+                      <div class="review-info">
+                        <ul class="review-rating">
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star-o"></i></li>
+                        </ul>
+                        <span class="review-caption">Based on 1 review</span>
+                        <span class="review-write-btn">Write a review</span>
+                      </div>
+                    </div>
+                    <div class="product-review-form">
+                      <h4 class="title">Write a review</h4>
+                      <form action="#" method="post">
+                        <div class="review-form-content">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="reviewFormName">Name</label>
+                                <input class="form-control" id="reviewFormName" type="text" placeholder="Enter your name" required="">
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="reviewFormEmail">Email</label>
+                                <input class="form-control" id="reviewFormEmail" type="email" placeholder="john.smith@example.com" required="">
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="rating">
+                                <span class="rating-title">Rating</span>
+                                <span>
+                                  <a class="fa fa-star-o" href="#/"></a>
+                                  <a class="fa fa-star-o" href="#/"></a>
+                                  <a class="fa fa-star-o" href="#/"></a>
+                                  <a class="fa fa-star-o" href="#/"></a>
+                                  <a class="fa fa-star-o" href="#/"></a>
+                                </span>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="reviewReviewTitle">Review Title</label>
+                                <input class="form-control" id="reviewReviewTitle" type="text" placeholder="Give your review a title" required="">
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="reviewFormTextarea">Body of Review <span>(1500)</span></label>
+                                <textarea class="form-control textarea" id="reviewFormTextarea" name="comment" rows="7" placeholder="Write your comments here" required=""></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group pull-right">
+                                <button class="btn btn-theme" type="submit">Submit Review</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="review-content">
+                      <div class="review-item">
+                        <ul class="review-rating">
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star-o"></i></li>
+                        </ul>
+                        <h4 class="title">Cobus Bester</h4>
+                        <h5 class="review-date"><span>Cobus Bester</span> on <span>Mar 03, 2021</span></h5>
+                        <p>Can’t wait to start mixin’ with this one! Irba-irr-Up-up-up-up-date your theme!</p>
+                        <a class="review-report" href="#/">Report as Inappropriate</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="commentProduct" role="tabpanel" aria-labelledby="product-comment-tab">
+                  <div class="product-comment">
+                    <form action="#">
+                      <div class="product-comment-content">
+                        <img src="{% static 'main/images/shop/comment.png' %}" alt="Image-HasTech">
+                        <textarea name="con_message" placeholder="Start the discussion…"></textarea>
+                      </div>
+                      <button class="btn btn-theme" type="submit">Post as Product</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="productCustom" role="tabpanel" aria-labelledby="product-custom-tab">
+                  <div class="product-shipping-policy">
+                    <div class="section-title">
+                      <h2 class="title">Shipping policy for our store</h2>
+                      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate</p>
+                    </div>
+                    <ul class="shipping-policy-list">
+                      <li>1-2 business days (Typically by end of day)</li>
+                      <li><a href="#">30 days money back guaranty</a></li>
+                      <li>24/7 live support</li>
+                      <li>odio dignissim qui blandit praesent</li>
+                      <li>luptatum zzril delenit augue duis dolore</li>
+                      <li>te feugait nulla facilisi.</li>
+                    </ul>
+                    <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum</p>
+                    <p>claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per</p>
+                    <p>seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="productInfo" role="tabpanel" aria-labelledby="product-info-tab">
+                  <div class="product-size-chart">
+                    <h4>Size Chart</h4>
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td class="cun-name"><span>UK</span></td>
+                          <td>18</td>
+                          <td>20</td>
+                          <td>22</td>
+                          <td>24</td>
+                          <td>26</td>
+                        </tr>
+                        <tr>
+                          <td class="cun-name"><span>European</span></td>
+                          <td>46</td>
+                          <td>48</td>
+                          <td>50</td>
+                          <td>52</td>
+                          <td>54</td>
+                        </tr>
+                        <tr>
+                          <td class="cun-name"><span>usa</span></td>
+                          <td>14</td>
+                          <td>16</td>
+                          <td>18</td>
+                          <td>20</td>
+                          <td>22</td>
+                        </tr>
+                        <tr>
+                          <td class="cun-name"><span>Australia</span></td>
+                          <td>28</td>
+                          <td>10</td>
+                          <td>12</td>
+                          <td>14</td>
+                          <td>16</td>
+                        </tr>
+                        <tr>
+                          <td class="cun-name"><span>Canada</span></td>
+                          <td>24</td>
+                          <td>18</td>
+                          <td>14</td>
+                          <td>42</td>
+                          <td>36</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Shop Tab Area ==-->
+
+    <!--== Start Featured Product Area Wrapper ==-->
+    <section class="product-area featured-product-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-lg-6 m-auto">
+            <div class="section-title text-center">
+              <h2 class="title">Похожие товары</h2>
+              <p>Возможно вам также понравится</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          {% for r_product in related_products %}
+          <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+            {% show_product r_product %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <!--== End Featured Product Area Wrapper ==-->
+  </main>
+{% endblock %}
+
+{% block javascript%}
+<!--=== jQuery Zoom Min Js ===-->
+<script src="{% static 'main/js/jquery-zoom.min.js' %}" ></script>
+{% endblock %}
+
+{% block js_last %}
+<script>
+  // Images Zoom
+  $('.zoom-hover').zoom();
+</script>
+{% endblock %}

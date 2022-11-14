@@ -1,7 +1,11 @@
+from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator
 from django.db import models
 
-
 # Create your models here.
+from django.urls import reverse
+
+
 
 class Product(models.Model):
     ON_SALE = "S"
@@ -43,16 +47,14 @@ class Product(models.Model):
 
     title = models.CharField(max_length=255, verbose_name="Название")
     price = models.FloatField(verbose_name="Цена")
-    discount = models.FloatField(verbose_name="Скидка", blank=True, null=True)
-    average_rating = models.FloatField(verbose_name="Средний рейтинг", default=0.0)
-    num_of_reviews = models.PositiveSmallIntegerField(verbose_name="Количество отзывов", default=0)
+    discount = models.FloatField(verbose_name="Скидка", blank=True, null=True, help_text="В процентах")
     product_code = models.PositiveIntegerField(unique=True, verbose_name="Код товара")
     description = models.TextField(verbose_name="Описание", blank=True, null=True)
     status = models.CharField(max_length=5, choices=STATUS_TYPES, verbose_name="Статус", default=ON_SALE, null=True)
     warranty_period = models.CharField(max_length=255, verbose_name="Гарантийный срок", blank=True, null=True)
     return_period = models.CharField(max_length=255, verbose_name="Обмен/возврат", blank=True, null=True)
     amount = models.PositiveIntegerField(verbose_name="Количество товара в наличии")
-    slug = models.SlugField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True)
     product_category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name="Категория")
     manufacturer = models.ForeignKey('Manufacturer', on_delete=models.CASCADE, verbose_name="Производитель")
     material = models.ManyToManyField('Material', verbose_name="Материал корпуса", blank=True)
@@ -74,15 +76,34 @@ class Product(models.Model):
     packing_size = models.CharField(max_length=255, verbose_name="Габариты упаковки", blank=True, null=True)
     feature = models.TextField(verbose_name="Особенности", blank=True, null=True)
     date_of_creation = models.DateTimeField(auto_now_add=True, verbose_name="Дата регистрации товара")
+    reviews = models.ManyToManyField(User, through='Review', verbose_name='Отзывы', blank=True)
 
     class Meta:
         verbose_name = 'товар'
         verbose_name_plural = 'товары'
-        ordering = ['average_rating']
         get_latest_by = "date_of_creation"
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('product', kwargs={'cat_slug': self.product_category.slug, 'prod_slug': self.slug})
+
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Товар")
+    comment = models.TextField(verbose_name="Отзыв", blank=True, null=True)
+    rating = models.PositiveSmallIntegerField(verbose_name="Оценка", default=0, validators=[MaxValueValidator(5)])
+    date_of_creation = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания отзыва")
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+        get_latest_by = "date_of_creation"
+
+    def __str__(self):
+        return f"{self.user} - {self.product}"
 
 
 class Material(models.Model):
@@ -138,8 +159,7 @@ class ProductPhoto(models.Model):
     class Meta:
         verbose_name = 'Фото товара'
         verbose_name_plural = 'Фото товара'
-        ordering = ['product']
+        ordering = ['index']
 
     def __str__(self):
         return f"id({self.pk}) {self.index} - {self.photo}"
-

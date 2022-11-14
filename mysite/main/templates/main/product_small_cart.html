@@ -1,0 +1,40 @@
+{% load main_filters %}
+
+<!-- Start Product Item -->
+<div class="product-item">
+  <div class="product-thumb" style="background: url({{ product.productphoto_set.all.first.photo.url }}) no-repeat center; background-size: cover">
+
+      <div class="ribbons">
+        {% if product.status == "A" %}
+        <span class="ribbon-soldout">Продано</span>
+        {% endif %}
+        {% if product.discount %}
+        <span class="ribbon ribbon-hot">Скидка</span>
+        <span class="ribbon ribbon-onsale align-right">-{{ product.discount|floatformat }}%</span>
+        {% endif %}
+      </div>
+    <div class="product-action">
+      <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+        <i class="ion-android-favorite-outline"></i>
+      </a>
+      <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+        <i class="ion-ios-search-strong"></i>
+      </a>
+      <a class="action-cart" href="#/">
+        <i class="fa fa-opencart"></i>
+      </a>
+    </div>
+  </div>
+  <div class="product-info">
+    <h4 class="title"><a href="{{ product.get_absolute_url }}">{{ product.title}}</a></h4>
+    <div class="prices">
+      {% if product.discount %}
+      <span class="price">${{ product.price|discount:product.discount }}</span>
+      <del class="price-old">${{ product.price }}</del>
+      {% else %}
+      <span class="price">${{ product.price }}</span>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<!-- End Product Item -->

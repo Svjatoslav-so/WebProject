@@ -3897,6 +3897,10 @@ table p {
 .home-slider-area.slider-default {
   position: relative;
 }
+.swiper-wrapper {
+align-items: center;
+}
+
 .home-slider-area.slider-default .home-slider-content .swiper-container .swiper-wrapper .swiper-slide-active .slider-content-area .content .tittle-wrp h2 {
   animation-delay: 1s;
   animation-name: fadeInUp;
