@@ -6,7 +6,6 @@ from django.db import models
 from django.urls import reverse
 
 
-
 class Product(models.Model):
     ON_SALE = "S"
     STATUS_TYPES = (
