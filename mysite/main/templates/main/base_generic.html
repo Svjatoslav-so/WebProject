@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="utf-8">
@@ -137,14 +137,23 @@
                 </ul>
               </div>
               <div class="header-action-usermenu">
+                {% if request.user.is_authenticated %} <a class="username" href="#">{{user}}</a>{% endif %}
                 <div class="icon-usermenu"><i class="ti-settings"></i></div>
                 <ul class="user-menu">
-                  <li><a href="{% url 'account' %}">My Account</a></li>
+                  {% if request.user.is_authenticated %}
+                  <li><a href="{% url 'account' %}">Аккаунт</a></li>
+                  {% else %}
+                  <li><a href="{% url 'login' %}">Войти</a></li>
+                  {% endif %}
                   <li><a href="{% url 'wishlist' %}">Wishlist</a></li>
                   <li><a href="{% url 'about' %}">About Us</a></li>
                   <li><a href="{% url 'contact' %}">Contact Us</a></li>
                   <li><a href="{% url 'blog' %}">Blog</a></li>
-                  <li><a href="{% url 'login' %}">Login</a></li>
+                  {% if request.user.is_authenticated %}
+                  <li><a href="{% url 'logout' %}">Выйти</a></li>
+                  {% else %}
+                  <li><a href="{% url 'registration' %}">Создать аккаунт</a></li>
+                  {% endif %}
                 </ul>
               </div>
               <div class="header-action-cart">
@@ -217,7 +226,7 @@
               <h4 class="widget-title">Information</h4>
               <nav class="widget-menu-wrap">
                 <ul class="nav-menu nav">
-                  <li><a href="{% url 'account' %}">My Account</a></li>
+                  <li><a href="{% url 'account' %}">Аккаунт</a></li>
                   <li><a href="{% url 'wishlist' %}">Wishlist</a></li>
                   <li><a href="{% url 'about' %}">About Us</a></li>
                   <li><a href="{% url 'contact' %}">Contact Us</a></li>
@@ -233,9 +242,9 @@
                 <ul class="nav-menu nav">
                   <li><a href="#/">Shipping policy</a></li>
                   <li><a href="#/">Size Chart</a></li>
-                  <li><a href="{% url 'login' %}">Login</a></li>
-                  <li><a href="{% url 'account' %}">My Account</a></li>
-                  <li><a href="#/">Register</a></li>
+                  <li><a href="{% url 'login' %}">Войти</a></li>
+                  <li><a href="{% url 'account' %}">Аккаунт</a></li>
+                  <li><a href="{% url 'registration' %}">Создать аккаунт</a></li>
                 </ul>
               </nav>
             </div>

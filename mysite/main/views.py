@@ -1,9 +1,25 @@
+from django.contrib.auth import login
+from django.contrib.auth.views import LoginView, LogoutView
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count, Avg
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 
 # Create your views here.
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+
+from .forms import RegistrationUserForm, LoginUserForm, EditProfile
 from .models import Product
+
+
+def if_user_auth_else_login(func):
+    def check(request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return func(request, *args, **kwargs)
+        else:
+            return redirect('login')
+
+    return check
 
 
 def index(request):
@@ -34,16 +50,41 @@ def about(request):
     return render(request, "main/about.html")
 
 
+@if_user_auth_else_login
 def account(request):
-    return render(request, "main/account.html")
+    if request.method == 'POST':
+        form = EditProfile(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            print("SAVE")
+            print(form)
+            # return redirect('index')
+        else:
+            print(form.errors)
+    else:
+        form = EditProfile(instance=request.user)
+        print("EMPTY")
+    context = {
+        'form': form
+    }
+    return render(request, "main/account.html", context=context)
+
+
+# @if_user_auth_else_login
+# def edit_account(request):
+#     return render(request, "main/account.html")
 
 
 def blog(request):
     return render(request, "main/blog.html")
 
 
-def login(request):
-    return render(request, "main/login.html")
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = 'main/login.html'
+
+    def get_success_url(self):
+        return reverse_lazy('account')
 
 
 def wishlist(request):
@@ -66,6 +107,23 @@ def product(request, cat_slug, prod_slug):
 
     context = {
         "product": prod,
-        "related_products": Product.objects.filter(product_category=prod.product_category)[:4]
+        "related_products": Product.objects.filter(product_category__slug=cat_slug)[:4]
     }
     return render(request, "main/shop-single-product-2.html", context=context)
+
+
+class Registration(CreateView):
+    form_class = RegistrationUserForm
+    template_name = "main/registration.html"
+    success_url = reverse_lazy('account')
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        response = super().form_valid(form)
+        login(self.request, self.object)
+        return response
+
+
+class LogoutUser(LogoutView):
+    next_page = reverse_lazy('index')
