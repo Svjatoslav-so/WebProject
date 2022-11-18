@@ -7161,6 +7161,8 @@ align-items: center;
   -moz-transition: 0.8s;
   -ms-transition: 0.8s;
   -o-transition: 0.8s;
+  aspect-ratio: 2 /1;
+  object-fit: cover;
 }
 .post-item .content .inner-content .title {
   font-size: 25px;

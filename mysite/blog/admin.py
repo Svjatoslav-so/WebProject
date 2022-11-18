@@ -22,7 +22,8 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'author', 'id')
     fields = ('id', 'title', 'slug', 'author', 'get_html_photo', 'photo', 'text', 'tags', 'date_of_creation',
               'edit_date', 'comments')
-    readonly_fields = ('id', 'get_html_photo', 'comments')
+    readonly_fields = ('id', 'get_html_photo', 'comments', 'date_of_creation', 'edit_date')
+    prepopulated_fields = {'slug': ('title',)}
 
     def get_html_photo(self, obj):
         if obj.photo:

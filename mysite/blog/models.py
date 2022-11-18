@@ -3,6 +3,8 @@ from django.db import models
 
 
 # Create your models here.
+from django.urls import reverse
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=55, unique=True, verbose_name="Тег")
@@ -21,7 +23,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор")
     text = models.TextField(verbose_name="Пост")
     photo = models.ImageField(upload_to="photos/post/%Y/%m/%d/", verbose_name="Фото")
-    tags = models.ForeignKey(Tag, on_delete=models.CASCADE, verbose_name="Теги")
+    tags = models.ManyToManyField(Tag, verbose_name="Теги")
     date_of_creation = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания поста")
     edit_date = models.DateTimeField(auto_now=True, verbose_name="Дата последнего редактирования")
     comments = models.ManyToManyField(User, through='Comment', verbose_name='Комментарии', blank=True,
@@ -34,6 +36,9 @@ class Post(models.Model):
 
     def __str__(self):
         return f"id({self.pk}) {self.title} - {self.author}"
+
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'post_slug': self.slug})
 
 
 class Comment(models.Model):

@@ -10,6 +10,7 @@ from django.views.generic import CreateView
 
 from .forms import RegistrationUserForm, LoginUserForm, EditProfile
 from .models import Product
+from blog.models import Post
 
 
 def if_user_auth_else_login(func):
@@ -25,7 +26,10 @@ def if_user_auth_else_login(func):
 def index(request):
     featured_products = Product.objects.exclude(status="A").annotate(average_rating=Avg('review__rating')).order_by(
         '-average_rating')[:8]
-    new_products = Product.objects.exclude(status="A").order_by('date_of_creation')[:8]
+    new_products = Product.objects.exclude(status="A").order_by('-date_of_creation')[:8]
+
+    new_posts = Post.objects.order_by('-date_of_creation')[:2]
+
     for r in featured_products:
         print(r, r.average_rating)
     context = {"main_slides": [
@@ -38,6 +42,7 @@ def index(request):
     ],
         "featured_products": featured_products,
         "new_products": new_products,
+        "new_posts": new_posts,
     }
     return render(request, "main/index-2.html", context=context)
 
