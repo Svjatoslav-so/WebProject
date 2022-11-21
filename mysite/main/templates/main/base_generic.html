@@ -10,6 +10,8 @@
 
     {% load static %}
 
+    {% load blog_tags %}
+
     <!--== Favicon ==-->
     <link rel="shortcut icon" href="{% static 'main/images/favicon.ico' %}" type="image/x-icon" />
 
@@ -112,12 +114,12 @@
                     </li>
                   </ul>
                 </li>
-                <li class="has-submenu"><a href="{% url 'blog' %}">Blog</a>
+                <li class="has-submenu"><a href="{% url 'blog' %}">Блог</a>
                   <ul class="submenu-nav">
-                    <li><a href="blog.html">Blog Grid</a></li>
-                    <li><a href="blog-details-left-sidebar.html">Blog Single Left Sidebar</a></li>
-                    <li><a href="blog-details-right-sidebar.html">Blog Single Right Sidebar</a></li>
-                    <li><a href="blog-details-no-sidebar.html">Blog Single No Sidebar</a></li>
+                    {% all_post_tags as tags %}
+                    {% for tag in tags %}
+                    <li><a href="{{tag.get_absolute_url}}">{{ tag|title }}</a></li>
+                    {% endfor %}
                   </ul>
                 </li>
                 <li><a href="{% url 'about' %}">About</a></li>

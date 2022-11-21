@@ -1,5 +1,7 @@
 {% extends "main/base_generic.html" %}
 
+{% load blog_tags %}
+
 {% block title %}
     <title>Blog – Alan - Kitchen Accessories Bootstrap 5 HTML Template</title>
 {% endblock %}
@@ -24,8 +26,8 @@
             {% block page-content-title %}
             <div class="page-title-content text-center">
               <div class="back-ground">
-                <h2 class="title text-white">Blog</h2>
-                <div class="bread-crumbs"><a href="{% url 'index' %}">Главная<span class="breadcrumb-sep">/</span></a><span class="active">Blog</span></div>
+                <h2 class="title text-white">Блог</h2>
+                <div class="bread-crumbs"><a href="{% url 'index' %}">Главная<span class="breadcrumb-sep">/</span></a><span class="active">Блог</span></div>
               </div>
             </div>
             {% endblock %}
@@ -70,75 +72,7 @@
                   <!--== End Blog Post Item ==-->
                 </div>
                 {% endfor %}
-                <div class="col-md-6 col-lg-12">
-                  <!--== Start Blog Post Item ==-->
-                  <div class="post-item">
-                    <div class="thumb">
-                      <a href="blog-details.html"><img src="{% static 'blog/images/2.webp'%}" alt="Alan-Blog"></a>
-                    </div>
-                    <div class="content">
-                      <div class="inner-content">
-                        <h4 class="title">
-                          <a href="blog-details.html">There are many variations of passages</a>
-                        </h4>
-                        <div class="meta">
-                          <a class="post-date" href="blog.html">January 26, 2021</a>
-                          <span>/</span>
-                          <a class="post-author" href="blog.html">Demo Alan Admin</a>
-                        </div>
-                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the...</p>
-                        <a class="btn-blog" href="blog-details.html">Read More</a>
-                      </div>
-                    </div>
-                  </div>
-                  <!--== End Blog Post Item ==-->
-                </div>
-                <div class="col-md-6 col-lg-12">
-                  <!--== Start Blog Post Item ==-->
-                  <div class="post-item">
-                    <div class="thumb">
-                      <a href="blog-details.html"><img src="{% static 'blog/images/3.webp'%}" alt="Alan-Blog"></a>
-                    </div>
-                    <div class="content">
-                      <div class="inner-content">
-                        <h4 class="title">
-                          <a href="blog-details.html">There are many variations of passages</a>
-                        </h4>
-                        <div class="meta">
-                          <a class="post-date" href="blog.html">January 26, 2021</a>
-                          <span>/</span>
-                          <a class="post-author" href="blog.html">Demo Alan Admin</a>
-                        </div>
-                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the...</p>
-                        <a class="btn-blog" href="blog-details.html">Read More</a>
-                      </div>
-                    </div>
-                  </div>
-                  <!--== End Blog Post Item ==-->
-                </div>
-                <div class="col-md-6 col-lg-12">
-                  <!--== Start Blog Post Item ==-->
-                  <div class="post-item">
-                    <div class="thumb">
-                      <a href="blog-details.html"><img src="{% static 'blog/images/4.webp'%}" alt="Alan-Blog"></a>
-                    </div>
-                    <div class="content">
-                      <div class="inner-content">
-                        <h4 class="title">
-                          <a href="blog-details.html">There are many variations of passages</a>
-                        </h4>
-                        <div class="meta">
-                          <a class="post-date" href="blog.html">January 26, 2021</a>
-                          <span>/</span>
-                          <a class="post-author" href="blog.html">Demo Alan Admin</a>
-                        </div>
-                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the...</p>
-                        <a class="btn-blog" href="blog-details.html">Read More</a>
-                      </div>
-                    </div>
-                  </div>
-                  <!--== End Blog Post Item ==-->
-                </div>
+
               </div>
               <div class="pagination-area">
                 <nav>
@@ -263,14 +197,10 @@
                 <h3 class="widget-title">Tags</h3>
                 <div class="widget-tags">
                   <ul>
-                    <li><a href="#/">Baller / </a></li>
-                    <li><a href="#/">Corer / </a></li>
-                    <li><a class="style2" href="#/">Cups / </a></li>
-                    <li><a class="style2" href="#/">Ladle / </a></li>
-                    <li><a href="#/">Peeler / </a></li>
-                    <li><a href="#/">Reamer / </a></li>
-                    <li><a class="style2" href="#/">Ricer / </a></li>
-                    <li><a class="style2" href="#/">Spatula</a></li>
+                    {% all_post_tags as tags %}
+                    {% for tag in tags %}
+                    <li><a href="{{ tag.get_absolute_url }}">{{ tag|title }}</a><span> / </span></li>
+                    {% endfor %}
                   </ul>
                 </div>
               </div>

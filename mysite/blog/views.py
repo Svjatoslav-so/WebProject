@@ -6,7 +6,14 @@ from .models import Post
 
 
 def blog(request):
-    all_posts = Post.objects.all()
+    if request.method == 'GET':
+        tag = request.GET.get('tag')
+        if tag:
+            all_posts = Post.objects.filter(tags__slug=tag)
+        else:
+            all_posts = Post.objects.all()
+    else:
+        all_posts = Post.objects.all()
     print("ALL_POSTS ", all_posts)
     context = {'all_posts': all_posts}
     return render(request, "blog/blog.html", context=context)

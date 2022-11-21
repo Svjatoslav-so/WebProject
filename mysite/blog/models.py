@@ -8,6 +8,7 @@ from django.urls import reverse
 
 class Tag(models.Model):
     title = models.CharField(max_length=55, unique=True, verbose_name="Тег")
+    slug = models.SlugField(max_length=55, unique=True)
 
     class Meta:
         verbose_name = 'Тег'
@@ -15,6 +16,9 @@ class Tag(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+    def get_absolute_url(self):
+        return reverse('blog') + f"?tag={self.slug}"
 
 
 class Post(models.Model):
@@ -32,7 +36,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
-        ordering = ['date_of_creation']
+        ordering = ['-date_of_creation']
 
     def __str__(self):
         return f"id({self.pk}) {self.title} - {self.author}"
