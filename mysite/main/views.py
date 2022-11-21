@@ -61,23 +61,12 @@ def account(request):
         form = EditProfile(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            print("SAVE")
-            print(form)
-            # return redirect('index')
-        else:
-            print(form.errors)
     else:
         form = EditProfile(instance=request.user)
-        print("EMPTY")
     context = {
         'form': form
     }
     return render(request, "main/account.html", context=context)
-
-
-# @if_user_auth_else_login
-# def edit_account(request):
-#     return render(request, "main/account.html")
 
 
 def blog(request):
