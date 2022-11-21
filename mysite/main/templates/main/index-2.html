@@ -445,19 +445,21 @@
             <!--== Start Blog Post Item ==-->
             <div class="post-item mb-sm-30">
               <div class="thumb">
-                <a href="blog-details.html"><img src="{{ post.photo.url }}" alt="Alan-Blog"></a>
+                <a href="{{ post.get_absolute_url }}"><img src="{{ post.photo.url }}" alt="Alan-Blog"></a>
               </div>
               <div class="content">
                 <div class="inner-content">
                   <h4 class="title">
-                    <a href="blog-details.html">{{ post.title }}</a>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
                   </h4>
                   <div class="meta">
                     <a class="post-date" href="#">{{ post.date_of_creation }}</a>
                     <span>/</span>
                     <a class="post-author" href="#">{{ post.author }}</a>
                   </div>
-                  <p>{{ post.text|truncatechars:255  }}</p>
+                  {% autoescape off %}
+                  <p>{{ post.text|truncatechars:255 }}</p>
+                  {% endautoescape %}
                   <a class="btn-blog" href="{{ post.get_absolute_url }}">Read More</a>
                 </div>
               </div>

@@ -1,0 +1,6 @@
+
+.post-details-content .post-details-body .content .thumb img {
+    aspect-ratio: 2 / 1;
+    width: 100%;
+    object-fit: cover;
+}
