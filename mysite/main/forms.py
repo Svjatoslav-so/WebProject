@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.forms import ModelForm
+from django.forms import ModelForm, Form, EmailField
 
 
 class RegistrationUserForm(UserCreationForm):
@@ -42,3 +42,11 @@ class EditProfile(ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
+
+
+class AddEmail(Form):
+    email = EmailField(label='', )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({"class": 'form-control', 'placeholder': "Введите ваш e-mail"})

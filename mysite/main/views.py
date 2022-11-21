@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from .forms import RegistrationUserForm, LoginUserForm, EditProfile
+from .forms import RegistrationUserForm, LoginUserForm, EditProfile, AddEmail
 from .models import Product
 from blog.models import Post
 
@@ -30,6 +30,21 @@ def index(request):
 
     new_posts = Post.objects.order_by('-date_of_creation')[:2]
 
+    # Если нужно удалить почту из сессии
+    # del request.session['email']
+
+    if request.method == "POST":
+        form = AddEmail(request.POST)
+        if form.is_valid():
+            user = request.user
+            if user.is_authenticated:
+                user.email = form.cleaned_data['email']
+                user.save()
+            else:
+                request.session['email'] = form.cleaned_data['email']
+    else:
+        form = AddEmail()
+
     for r in featured_products:
         print(r, r.average_rating)
     context = {"main_slides": [
@@ -43,6 +58,7 @@ def index(request):
         "featured_products": featured_products,
         "new_products": new_products,
         "new_posts": new_posts,
+        "form": form
     }
     return render(request, "main/index-2.html", context=context)
 
