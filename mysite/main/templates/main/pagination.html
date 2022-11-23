@@ -1,0 +1,33 @@
+{% load main_filters %}
+
+<nav>
+<ul class="page-numbers">
+  {% if page_obj.has_previous %}
+  <li>
+    <a class="page-number next" href="?page={{ page_obj.previous_page_number }}">
+      <i class="ion-ios-arrow-left"></i>
+      Prev
+    </a>
+  </li>
+  {% endif %}
+  {% for p in page_obj.paginator.page_range %}
+  {% if page_obj.number == p %}
+  <li>
+    <a class="page-number active" href="">{{p}}</a>
+  </li>
+  {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+  <li>
+    <a class="page-number" href="?page={{ p }}">{{ p }}</a>
+  </li>
+  {% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+  <li>
+    <a class="page-number next" href="?page={{ page_obj.next_page_number }}">
+      Next
+      <i class="ion-ios-arrow-right"></i>
+    </a>
+  </li>
+  {% endif %}
+</ul>
+</nav>

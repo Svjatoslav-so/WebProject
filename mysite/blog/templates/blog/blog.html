@@ -1,6 +1,8 @@
 {% extends "main/base_generic.html" %}
 
 {% load blog_tags %}
+{% load main_filters %}
+{% load main_tags %}
 
 {% block title %}
     <title>Blog – Alan - Kitchen Accessories Bootstrap 5 HTML Template</title>
@@ -45,7 +47,7 @@
           <div class="col-lg-9">
             <div class="blog-content-area post-items-style2">
               <div class="row">
-                {% for post in all_posts %}
+                {% for post in page_obj %}
                 <div class="col-md-6 col-lg-12">
                   <!--== Start Blog Post Item ==-->
                   <div class="post-item">
@@ -75,33 +77,9 @@
 
               </div>
               <div class="pagination-area">
-                <nav>
-                  <ul class="page-numbers">
-                    <li>
-                      <a class="page-number disabled next" href="blog.html">
-                        <i class="ion-ios-arrow-left"></i>
-                        Prev
-                      </a>
-                    </li>
-                    <li>
-                      <a class="page-number active" href="blog.html">1</a>
-                    </li>
-                    <li>
-                      <a class="page-number" href="blog.html">2</a>
-                    </li>
-                    <li>
-                      <a class="page-number" href="blog.html">3</a>
-                    </li>
-                    <li>
-                      <a class="page-number next" href="blog.html">
-                        Next
-                        <i class="ion-ios-arrow-right"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+                {% show_pagination page_obj %}
                 <div class="total-pages">
-                  <p>Showing 1 - 4 of 11 result</p>
+                  <p>{{ page_obj|goods_on_page }}</p>
                 </div>
               </div>
             </div>

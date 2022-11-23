@@ -54,7 +54,7 @@
                           </div>
                         </nav>
                       </div>
-                      <p>Showing 1 - 15 of 33 result</p>
+                      <p>{{ page_obj|goods_on_page }}</p>
                     </div>
                     <div class="product-sorting-wrapper">
                       <div class="product-show">
@@ -78,7 +78,7 @@
             <div class="tab-content" id="nav-tabContent">
               <div class="tab-pane fade show active" id="nav-grid" role="tabpanel" aria-labelledby="nav-grid-tab">
                 <div class="row">
-                  {%for g in goods%}
+                  {%for g in page_obj%}
                   <div class="col-md-6 col-xl-4">
                      {% show_product g %}
                   </div>
@@ -88,7 +88,7 @@
               <div class="tab-pane fade" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab">
                 <div class="row">
 
-                  {%for g in goods%}
+                  {%for g in page_obj%}
                   <div class="col-12">
                     <!-- Start Product Item -->
                     <div class="product-item product-item-list">
@@ -134,36 +134,14 @@
                 </div>
               </div>
             </div>
+            {% if page_obj.has_other_pages %}
             <div class="pagination-area">
-              <nav>
-                <ul class="page-numbers">
-                  <li>
-                    <a class="page-number disabled next" href="blog.html">
-                      <i class="ion-ios-arrow-left"></i>
-                      Prev
-                    </a>
-                  </li>
-                  <li>
-                    <a class="page-number active" href="blog.html">1</a>
-                  </li>
-                  <li>
-                    <a class="page-number" href="blog.html">2</a>
-                  </li>
-                  <li>
-                    <a class="page-number" href="blog.html">3</a>
-                  </li>
-                  <li>
-                    <a class="page-number next" href="blog.html">
-                      Next
-                      <i class="ion-ios-arrow-right"></i>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+                {% show_pagination page_obj %}
               <div class="total-pages">
-                <p>Showing 1 - 15 of 33 result</p>
+                <p>{{page_obj|goods_on_page}}</p>
               </div>
             </div>
+            {% endif %}
           </div>
           <div class="col-lg-3">
             <div class="shop-sidebar-area">

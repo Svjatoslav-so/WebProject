@@ -112,7 +112,7 @@ admin.site.register(Category, CategoryAdmin)
 class ProductPhotoAdmin(admin.ModelAdmin):
     list_display = ('id', 'index', 'photo', 'product')
     list_display_links = ('id', 'photo')
-    search_fields = ('id', 'photo', 'product')
+    search_fields = ('id', 'photo')
     fields = ('id', 'get_html_photo', 'photo', 'index', 'product')
     readonly_fields = ('id', 'get_html_photo')
 

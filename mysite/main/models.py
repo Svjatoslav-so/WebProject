@@ -80,7 +80,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'товар'
         verbose_name_plural = 'товары'
-        get_latest_by = "date_of_creation"
+        get_latest_by = "-date_of_creation"
 
     def __str__(self):
         return self.title

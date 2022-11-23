@@ -1,6 +1,7 @@
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 from django.db.models import Count, Avg
 from django.shortcuts import render, redirect
 
@@ -85,10 +86,6 @@ def account(request):
     return render(request, "main/account.html", context=context)
 
 
-def blog(request):
-    return render(request, "main/blog.html")
-
-
 class LoginUser(LoginView):
     form_class = LoginUserForm
     template_name = 'main/login.html'
@@ -102,9 +99,14 @@ def wishlist(request):
 
 
 def shop(request):
-    goods = Product.objects.all()
+    goods = Product.objects.all().order_by('-status')
+
+    paginator = Paginator(goods, 9)
+    page_num = request.GET.get('page')
+    page_obj = paginator.get_page(page_num)
+
     context = {
-        'goods': goods
+        'page_obj': page_obj
     }
     return render(request, "main/shop.html", context=context)
 

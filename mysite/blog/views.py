@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
 
 
@@ -15,7 +16,12 @@ def blog(request):
     else:
         all_posts = Post.objects.all()
     print("ALL_POSTS ", all_posts)
-    context = {'all_posts': all_posts}
+
+    paginator = Paginator(all_posts, 3)
+    page_num = request.GET.get('page')
+    page_obj = paginator.get_page(page_num)
+
+    context = {'page_obj': page_obj}
     return render(request, "blog/blog.html", context=context)
 
 
